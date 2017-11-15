@@ -23,13 +23,43 @@ public class BacksysConfiguration {
 	 */
 	@Bean
 	public Docket swaggerSettings() {
-		return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select().apis(RequestHandlerSelectors.any())
-				.apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class)).paths(PathSelectors.any())
-				.build().pathMapping("/");
+		String pathMapping="/";
+		System.out.println("http://localhost:8080" + pathMapping + "/swagger-ui.html");
+		
+		return new Docket(DocumentationType.SWAGGER_2)
+				.groupName("组织名吗")
+				.useDefaultResponseMessages(true)
+				.forCodeGeneration(false)
+				.select()
+				.apis(RequestHandlerSelectors.any())
+				.apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
+				.paths(PathSelectors.any()) // 有待研究
+				.build()
+				.apiInfo(apiInfo())
+				.pathMapping(pathMapping);
 	}
 
 	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder().title("Official Background System").description("API FOR BACKGROUND FOR PRODUCE")
-				.contact("CUSTOM APPS TEAM, KUAIFU").version("1.0.0").build();
+		return new ApiInfoBuilder()
+				.title("后台系统 API")
+				.description(initDescription())
+				.version("1.0.0")
+				.licenseUrl("http://cn.bing.com")
+				.termsOfServiceUrl("https://www.baidu.com")
+				.license("The Apache License, Version 2.0")
+				.contact("后台开发团队")
+				.build();
+	}
+	
+	private String initDescription(){
+		StringBuffer sb = new StringBuffer();
+		
+		sb.append("本页面用来测试swagger提供的restful 接口文档功能")
+			.append("<br/>")
+			.append("包括增删改查四种例子： POST DELETE PUT GET")
+			.append("<br/>")
+			.append("REST API 设计应该注意哪些问题以及如何解决这些问题");
+		
+		return sb.toString();
 	}
 }
