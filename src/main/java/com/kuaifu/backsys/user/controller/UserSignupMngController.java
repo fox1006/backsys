@@ -28,9 +28,9 @@ import io.swagger.annotations.ApiResponses;
  */
 @Api(value = "API UserSignupMng", produces="生产者", consumes="消费者")
 @RestController
-public class UserSignupMng {
+public class UserSignupMngController {
 
-	@RequestMapping("/")
+	@RequestMapping(path="/", method=RequestMethod.GET)
 	public String welcome() {
 		return "welcome";
 	}
