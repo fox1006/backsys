@@ -6,19 +6,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kuaifu.backsys.bean.GenericResponse;
+import com.kuaifu.backsys.bean.User;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.Example;
+import io.swagger.annotations.ExampleProperty;
 
 /**
  * 后面加入lombok包，可以省点事
@@ -106,7 +111,7 @@ public class UserSignupMngController {
             @ApiResponse(code = 500, message = "服务器不能完成请求")}
      )
 	@RequestMapping(path="deleteUser", method=RequestMethod.DELETE)
-	public GenericResponse deleteUser(@RequestParam(value = "userId", required = false) String userId) {
+	public GenericResponse deleteUser(@ApiParam(defaultValue="00001") @RequestParam(value = "userId", required = false) String userId) {
 		GenericResponse resp = new GenericResponse();
 		resp.setMessage("delete user successful");
 		resp.setCode("200");
@@ -132,5 +137,24 @@ public class UserSignupMngController {
 		resp.setMessage("update user successful");
 		resp.setCode("200");
 		return resp;
+	}
+	
+	
+	/**
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	@ApiOperation(value = "test", notes = "test...")	
+	@RequestMapping(path="testUser", method=RequestMethod.POST)
+	public GenericResponse testUser(@ApiParam(value = "用户请求body", required=true, examples=@Example(value= {
+			@ExampleProperty(value="{userId: \"\"}"),
+	})) @RequestBody User user) {
+		
+		GenericResponse resp = new GenericResponse();
+		resp.setMessage("update user successful");
+		resp.setCode("200");
+		return resp;
+		
 	}
 }
